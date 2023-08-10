@@ -53,16 +53,13 @@ def get_AI_guess(word_list: list[str], guesses: list[str], feedback: list[str]) 
     
     for i in range(len(feedback)):
         word = feedback[i]
-        # print(word)
         cor_word = guesses[i]
         for j in range(len(word)):
             if word[j] != "-" and word[j].upper() not in correct_letters:
-                # print(f"{cor_word[j]} is right")
                 correct_letters += [word[j].upper()]
                 if word[j].upper() in incorrect_letters:
                     incorrect_letters.remove(cor_word[j])
             if word[j] == "-":
-                # print(f"{cor_word[j]} is wrong")
                 if cor_word[j].upper() not in correct_letters and cor_word[j].upper() not in incorrect_letters:
                     incorrect_letters += cor_word[j]
 
@@ -74,35 +71,23 @@ def get_AI_guess(word_list: list[str], guesses: list[str], feedback: list[str]) 
                 incorrect_place[cor_word[j]] += [j]
             if word[j].islower() and cor_word[j] not in incorrect_place:
                 incorrect_place[cor_word[j]] = [j]
-        # print(correct_letters, incorrect_letters, correct_place, incorrect_place)
 
     for word in word_list:
         if all(letter in word for letter in correct_letters) and all(letter not in word for letter in incorrect_letters) and word not in guesses:
             correct_green = True
             different_yellow = True
-            # print(incorrect_letters)
-            # print(correct_letters)
             for item in correct_place:
                 for number in correct_place[item]:
-                    # if word[number] == item:
-                    #     correct_green = True
                     if word[number] != item:
                         correct_green = False
-                        # print(f"{correct_place}, {word}, {number}, {word[number]}, {item}")
             
             for item in incorrect_place:
                 for number in incorrect_place[item]:
-                    # if word[number] != item:
-                    #     different_yellow = True
                     if word[number] == item:
                         different_yellow = False
-                        # print(f"{incorrect_place}, {word}, {number}, {word[number]}, {item}")
 
             if correct_green and different_yellow:
-                # print("green and yellow worked")
                 return word
-    
-    # print(secret_word)
  
 
 def get_feedback(guess: str, secret_word: str) -> str:
@@ -218,8 +203,6 @@ def play_wordle(secret_word: str, word_list: list[str], mode="HUMAN") -> list[st
 
 if __name__ == "__main__":
     secret_word = pick_secret_word(get_word_list()) # Sometimes secret_word will be easy, sometimes will be hard
-    # for i in range(len(get_word_list())):
-    #     secret_word = get_word_list()[i]
     play_wordle(secret_word, get_word_list(), "AI")
         
     guesses = play_wordle(secret_word, get_word_list(), "AI")
