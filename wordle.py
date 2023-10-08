@@ -16,7 +16,6 @@ def pick_secret_word(word_list: list[str]) -> str:
             str: a single word from the list of allowable words
     '''
     return random.choice(word_list)
-    # return "GAUDY"  # Sample word for testing.
 
 def get_player_guess(word_list: list[str]) -> str:
     '''Prompts for and returns a player guess until the player enters a guess that:
@@ -47,14 +46,16 @@ def get_AI_guess(word_list: list[str], guesses: list[str], feedback: list[str]) 
     correct_place = {}
     incorrect_place = {}
 
-
+    # makes first guess CRATE
     if guesses == []:
         return "CRATE"
     
     for i in range(len(feedback)):
         word = feedback[i]
         cor_word = guesses[i]
+
         for j in range(len(word)):
+            # stores correct and incorrect letters (green and red letters)
             if word[j] != "-" and word[j].upper() not in correct_letters:
                 correct_letters += [word[j].upper()]
                 if word[j].upper() in incorrect_letters:
@@ -63,6 +64,7 @@ def get_AI_guess(word_list: list[str], guesses: list[str], feedback: list[str]) 
                 if cor_word[j].upper() not in correct_letters and cor_word[j].upper() not in incorrect_letters:
                     incorrect_letters += cor_word[j]
 
+            # stores correct place values (green and yellow letters)
             if word[j].isupper() and word[j] in correct_place:
                 correct_place[word[j]] += [j]
             if word[j].isupper() and word[j] not in correct_place:
@@ -74,13 +76,17 @@ def get_AI_guess(word_list: list[str], guesses: list[str], feedback: list[str]) 
 
     for word in word_list:
         if all(letter in word for letter in correct_letters) and all(letter not in word for letter in incorrect_letters) and word not in guesses:
+            # initializes
             correct_green = True
             different_yellow = True
+
+            # if the guess doesn't have the same greens
             for item in correct_place:
                 for number in correct_place[item]:
                     if word[number] != item:
                         correct_green = False
             
+            # to not repeat words with same yellow letter inputs
             for item in incorrect_place:
                 for number in incorrect_place[item]:
                     if word[number] == item:
