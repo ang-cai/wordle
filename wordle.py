@@ -208,8 +208,8 @@ def play_wordle(secret_word: str, word_list: list[str], mode="HUMAN") -> list[st
         return guesses 
 
 if __name__ == "__main__":
-    secret_word = pick_secret_word(get_word_list()) # Sometimes secret_word will be easy, sometimes will be hard
-    play_wordle(secret_word, get_word_list(), "AI")
+    # secret_word = pick_secret_word(get_word_list()) # Sometimes secret_word will be easy, sometimes will be hard
+    secret_word = "zesty";
         
     guesses = play_wordle(secret_word, get_word_list(), "AI")
 
